@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSON;
 public class ServiceAspect {  
 	private static final Logger logger = LoggerFactory.getLogger(ServiceAspect.class);
 	
-    @Around("execution(* com.lencee.arowana.biz.impl.*.*(..))")  
+    @Around("execution(* com.southwind.odin.biz.impl.*.*(..))")  
     public Object process(ProceedingJoinPoint jp) throws java.lang.Throwable {
     	Object rvt = null;
 			long startTime = System.currentTimeMillis();

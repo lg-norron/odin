@@ -11,6 +11,7 @@ package com.southwind.common;
 
 import java.io.IOException;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -35,9 +36,16 @@ public class HtmlUtil {
 	 * @throws IOException
 	 */
 	public static String getHtmlBodyStr(String urlstr) throws IOException{
-		Document doc = Jsoup.connect(urlstr).ignoreContentType(true).get();
+		Connection conn = Jsoup.connect(urlstr).timeout(5000).ignoreContentType(true);
+		System.out.println(conn.toString());
+		Document doc = conn.get();
 		String docstr = doc.body().text();
 		return docstr;
+	}
+	
+	public static void main(String[] args) throws IOException {
+		String url = "http://www.toutiao.com/api/article/recent/?callback=jQuery17206213512956619789_1406771470028&category=__all__&count=20&max_behot_time=1406767870&offset=0&utm_source=toutiao&max_create_time=1406767870&&_=1406771470028";
+		System.out.println(getHtmlBodyStr(url));
 	}
 	
 }

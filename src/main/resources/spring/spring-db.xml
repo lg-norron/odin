@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/context/spring-context.xsd
 		">
 	<!-- @Resource注入 -->
-	<context:component-scan base-package="com.lencee.albatross">
+	<context:component-scan base-package="com.southwind">
 		<!-- context:include 写法表示:在其扫描到的所有类中，全部自动加上注解并纳入Spring容器中 -->
 		<!-- <context:include-filter type="regex" expression="cn.itkt.*.service.*.*" 
 			/> -->
@@ -64,12 +64,17 @@
 
 	<!-- 创建SqlSessionFactory和指定mybatis配置文件路径，同时指定数据源 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="configLocation" value="classpath:mybatis/MyBatis-Configuration.xml"></property>
 		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/MyBatis-Configuration.xml"></property>
+		<property name="mapperLocations"  >
+        	<list><!-- Mybatis XML映射文件 -->
+        		<value>classpath*:mybatis/mapper/*.xml</value>
+        	</list>	
+        </property>
 	</bean>
 	<!-- 配置用mybatis生成Mapper文件路径 -->
 	<bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.lencee.albatross.dal.mybatis.mapper" />
+		<property name="basePackage" value="com.southwind.odin.dal.mybatis.mapper" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 

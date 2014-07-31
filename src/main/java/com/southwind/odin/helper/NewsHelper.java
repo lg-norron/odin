@@ -9,6 +9,10 @@
  
 package com.southwind.odin.helper;
 
+import org.apache.commons.lang3.RandomUtils;
+
+import com.southwind.common.EncryptionUtil;
+
 
  /**
  * 
@@ -45,7 +49,7 @@ public class NewsHelper {
 		String curt = ""+curl;
 		long prel = curl-3600*1000;
 		
-		String jqseq = "1720"+SHAUtil.sha1(curt).substring(0, 16);
+		String jqseq = genterRandomNum();
 		StringBuffer urlstr = new StringBuffer("http://www.toutiao.com/api/article/recent/?");
 		urlstr.append("callback=jQuery").append(jqseq).append("_").append(curt);
 		urlstr.append("&category=__all__&count=20");
@@ -59,5 +63,12 @@ public class NewsHelper {
 	
 	public static String genterRandomNum(){
 		String ret = "1720";
+		Long longvalue = RandomUtils.nextLong(0, Long.MAX_VALUE);
+		String en = EncryptionUtil.encodeMD5String(longvalue+"");
+		Long enlong = Long.parseLong(en.substring(0,15),16);
+		ret += enlong;
+		ret = ret.substring(0,20);
+		return ret;
 	}
+	
 }

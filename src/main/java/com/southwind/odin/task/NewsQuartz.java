@@ -9,12 +9,12 @@
  
 package com.southwind.odin.task;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -43,13 +43,19 @@ public class NewsQuartz {
 	@Resource
 	private NewsMapper newsMapper;
 	
-	@Scheduled(cron = "10 53/1 15 * * *")
+	@Scheduled(cron = "10 20/30 * * * *")
 	public void process(){
 		System.out.println("task run");
+		try{
 		String urlstr = NewsHelper.createUrlForToutiao();
 		System.out.println(urlstr);
-		try {
-			String docstr = HtmlUtil.getHtmlBodyStr(urlstr);
+			String docstr = null;
+				docstr = HtmlUtil.getHtmlBodyStr(urlstr);
+			if(StringUtils.isBlank(docstr)){
+				System.out.println("连接异常");
+				return;
+			}
+			
 			String jsonstr = NewsHelper.getJsonMsg(docstr);
 			System.out.println(jsonstr);
 			ToutiaoMsg tm = JSON.parseObject(jsonstr, ToutiaoMsg.class);
@@ -83,7 +89,7 @@ public class NewsQuartz {
 //				e.printStackTrace();
 //			}
 			System.out.println("task end");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -3,8 +3,8 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
 
 	<!-- 项目名称及日志目录定义 -->
-	<property name="PROJECT_NAME" value="albatross" />
-	<property name="LOG_HOME" value="/opt/app/log/${PROJECT_NAME}" />
+	<property name="PROJECT_NAME" value="odin" />
+	<property name="LOG_HOME" value="/root/files/logs/${PROJECT_NAME}" />
 	
 	<contextName>${CONTEXT_NAME}</contextName>
 	
@@ -51,7 +51,7 @@
 			</pattern>
 		</encoder>
 	</appender>
-  	
+	
 	<!-- ===================================================================== -->
 	<!-- Root logger的定义 -->
 	<!-- ===================================================================== -->

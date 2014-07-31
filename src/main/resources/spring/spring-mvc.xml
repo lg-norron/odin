@@ -10,7 +10,7 @@
 		  http://www.springframework.org/schema/context/spring-context-4.0.xsd"
 	default-lazy-init="false">
 	<!-- 扫描指定的包中的类上的注解 -->
-	<context:component-scan base-package="com.lencee.albatross.api" />
+	<context:component-scan base-package="com.southwind" />
 	<!-- no resource view resolver, api service do not need it -->
 
 	<!-- be careful!!!! DO NOT mapping resources , DO NOT mapping default-mvc-controller!!!!we 

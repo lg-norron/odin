@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSON;
 public class ClientAspect {  
 	private static final Logger logger = LoggerFactory.getLogger(ClientAspect.class);
 	
-    @Around("execution(* com.lencee.albatross.dal.soap.client.impl..*.*(..)) || execution(* com.lencee.albatross.dal.impl..*.*(..))")  
+    @Around("execution(* com.southwind.odin.dal.soap.client.impl..*.*(..)) || execution(* com.southwind.odin.dal.impl..*.*(..))")  
     public Object process(ProceedingJoinPoint jp) throws java.lang.Throwable {
     	long startTime = System.currentTimeMillis();
     	String methodInfo = jp.getTarget().getClass().getSimpleName() + "." + jp.getSignature().getName();
