@@ -2,7 +2,9 @@ package com.southwind.odin.dal.mybatis.mapper;
 
 import com.southwind.odin.dal.mybatis.model.News;
 import com.southwind.odin.dal.mybatis.model.NewsExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface NewsMapper {
@@ -93,4 +95,18 @@ public interface NewsMapper {
      * @mbggenerated Wed Jul 30 17:39:34 GMT+08:00 2014
      */
     int updateByPrimaryKey(News record);
+
+	
+	/**
+	 * 获取未读的最新的size条消息
+	 * 
+	 * @param mac
+	 * @param size
+	 * @return 
+	 * @return List<News>
+	 * @exception 
+	 * @since  1.0.0
+	 */
+	
+	List<News> selectUnreadNewsList(@Param("mac") String mac, @Param("size") int size);
 }

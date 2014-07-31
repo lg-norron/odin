@@ -93,4 +93,15 @@ public interface NewspulllogMapper {
      * @mbggenerated Wed Jul 30 17:39:34 GMT+08:00 2014
      */
     int updateByPrimaryKey(Newspulllog record);
+
+	
+	/**
+	 * insertBatch(这里用一句话描述这个方法的作用)
+	 * @param logList 
+	 * @return void
+	 * @exception 
+	 * @since  1.0.0
+	 */
+	
+	void insertBatch(List<Newspulllog> list);
 }

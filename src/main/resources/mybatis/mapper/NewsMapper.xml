@@ -300,4 +300,14 @@
       publishtime = #{publishtime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="selectUnreadNewsList" resultMap="BaseResultMap" parameterType="com.southwind.odin.dal.mybatis.model.NewsExample" >
+  	select a.id, a.title, a.tag, a.url, a.source, a.publishtime
+  	from news a
+  	where a.id not in (
+  		select newsid from newspulllog where mac = #{mac}
+  	)
+  	order by publishtime desc
+  	limit 0,#{size}
+  </select>
 </mapper>

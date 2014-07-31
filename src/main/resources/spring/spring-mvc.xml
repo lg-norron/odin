@@ -9,6 +9,25 @@
 		  http://www.springframework.org/schema/context 
 		  http://www.springframework.org/schema/context/spring-context-4.0.xsd"
 	default-lazy-init="false">
+	<!-- 处理spring mvc 3.2下JSON 报406错误 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+              <list>
+                  <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+                            <!-- 返回Spring 乱码 主要是默认的 String Converter 编码是 ISO-8859-1 (按需要修改这里面的配置)-->
+                  <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                        <property name="supportedMediaTypes">
+                            <list>
+                                <value>text/plain;charset=UTF-8</value>
+                            </list>
+                        </property>
+                        <property name="writeAcceptCharset" value="true"/>
+                    </bean>
+              </list>
+        </property>
+    </bean>
+     
+    <mvc:annotation-driven/>
 	<!-- 扫描指定的包中的类上的注解 -->
 	<context:component-scan base-package="com.southwind" />
 	<!-- no resource view resolver, api service do not need it -->
