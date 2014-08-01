@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.southwind.common.HtmlUtil;
 import com.southwind.odin.dal.mybatis.mapper.NewsMapper;
 import com.southwind.odin.dal.mybatis.model.News;
+import com.southwind.odin.dal.mybatis.model.NewsExample;
 import com.southwind.odin.helper.NewsHelper;
 import com.southwind.odin.helper.model.ToutiaoMsg;
 import com.southwind.odin.helper.model.ToutiaoNews;
@@ -43,7 +44,7 @@ public class NewsQuartz {
 	@Resource
 	private NewsMapper newsMapper;
 	
-	@Scheduled(cron = "10 20/30 * * * *")
+	@Scheduled(cron = "10 */30 * * * *")
 	public void process(){
 		System.out.println("task run");
 		try{
@@ -74,7 +75,12 @@ public class NewsQuartz {
 				
 				newsList.add(record);
 				try {
-					newsMapper.insert(record);
+					NewsExample example = new NewsExample();
+					example.createCriteria().andTitleEqualTo(tn.getTitle());
+					List<News> list = newsMapper.selectByExample(example);
+					if(list.size()==0){
+						newsMapper.insert(record);
+					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
