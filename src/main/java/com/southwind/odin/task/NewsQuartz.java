@@ -15,11 +15,14 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.southwind.common.HtmlUtil;
+import com.southwind.common.LogbackConfigListener;
 import com.southwind.odin.dal.mybatis.mapper.NewsMapper;
 import com.southwind.odin.dal.mybatis.model.News;
 import com.southwind.odin.helper.NewsHelper;
@@ -39,20 +42,21 @@ import com.southwind.odin.helper.model.ToutiaoNews;
  */
 @Service
 public class NewsQuartz {
-	
+	private static final Logger logger = LoggerFactory
+			.getLogger(NewsQuartz.class);
 	@Resource
 	private NewsMapper newsMapper;
 	
-	@Scheduled(cron = "10 20/30 * * * *")
+	@Scheduled(cron = "10 */10 * * * *")
 	public void process(){
-		System.out.println("task run");
+		logger.info("task run");
 		try{
 		String urlstr = NewsHelper.createUrlForToutiao();
 		System.out.println(urlstr);
 			String docstr = null;
 				docstr = HtmlUtil.getHtmlBodyStr(urlstr);
 			if(StringUtils.isBlank(docstr)){
-				System.out.println("连接异常");
+				logger.error("连接异常");
 				return;
 			}
 			
@@ -88,7 +92,7 @@ public class NewsQuartz {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
-			System.out.println("task end");
+			logger.info("task end");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
